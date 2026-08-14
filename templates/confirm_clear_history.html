@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Clear History - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/confirmation.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper confirmation-wrapper">
+    <div class="confirmation-container">
+        <div class="confirmation-card card">
+            <div class="card-header">
+                <h1 class="confirmation-title">🗑️ Clear ALL History?</h1>
+            </div>
+            <div class="card-content">
+                <p class="confirmation-message">This will permanently delete all {{ count }} entries in your activity history.</p>
+                
+                <div class="warning-box card">
+                    <p class="warning-text">
+                        ⚠️ <strong>Warning:</strong> This action cannot be undone. All history data will be permanently removed.
+                    </p>
+                </div>
+                
+                <div class="history-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">Total Entries:</span>
+                        <span class="summary-value">{{ count }}</span>
+                    </div>
+                </div>
+                
+                <div class="confirmation-actions">
+                    <form method="POST" action="{{ url_for('clear_history') }}" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Yes, Clear ALL History</button>
+                    </form>
+                    <a href="{{ url_for('history') }}" class="btn btn-outline">Cancel</a>
+                </div>
+                
+                <p class="confirmation-note">If you need to keep your history, please cancel and manually delete only the entries you want to remove.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

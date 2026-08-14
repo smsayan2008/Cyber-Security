@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper dashboard-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">Dashboard</h1>
+        <p class="page-subtitle">Your cybersecurity overview and quick actions.</p>
+        <div class="header-info">
+            <div class="current-date">{{ current_date }}</div>
+            <div class="digital-clock">{{ current_clock }}</div>
+        </div>
+    </div>
+
+    <!-- STATISTICS CARDS -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.passwords_generated }}</div>
+                <div class="stat-label">Passwords Generated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.passwords_checked }}</div>
+                <div class="stat-label">Passwords Checked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.links_checked }}</div>
+                <div class="stat-label">Links Checked</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.warnings_found }}</div>
+                <div class="stat-label">Warnings Found</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value">{{ stats.total_activities }}</div>
+                <div class="stat-label">Total Activities</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN DASHBOARD GRID -->
+    <div class="dashboard-grid">
+        <!-- SECURITY OVERVIEW -->
+        <section class="dashboard-card card">
+            <div class="card-header">
+                <h2 class="card-title">🔒 Security Overview</h2>
+                <p class="card-subtitle">Based on recent local checks</p>
+            </div>
+            <div class="card-content">
+                <div class="overview-content">
+                    <p>CyberShield monitors your local security activities. This is a local analysis tool and cannot guarantee complete protection against all threats.</p>
+                    
+                    <div class="overview-stats">
+                        <div class="overview-stat">
+                            <span class="stat-name">Security Status</span>
+                            <span class="stat-value">LOCAL ANALYSIS ACTIVE</span>
+                        </div>
+                        <div class="overview-stat">
+                            <span class="stat-name">Data Storage</span>
+                            <span class="stat-value">LOCAL ONLY</span>
+                        </div>
+                        <div class="overview-stat">
+                            <span class="stat-name">Last Check</span>
+                            <span class="stat-value">Real-time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RECENT ACTIVITY -->
+        <section class="dashboard-card card">
+            <div class="card-header">
+                <h2 class="card-title">📋 Recent Activity</h2>
+                <p class="card-subtitle">Latest security actions</p>
+            </div>
+            <div class="card-content">
+                <div class="activity-list">
+                    {% if recent_activity %}
+                        {% for activity in recent_activity %}
+                        <div class="activity-item">
+                            <div class="activity-type">
+                                {% if activity.type == 'password_generated' %}
+                                    🔑 Password Generated
+                                {% elif activity.type == 'password_regenerated' %}
+                                    🔄 Password Regenerated
+                                {% elif activity.type == 'password_checked' %}
+                                    ✓ Password Checked
+                                {% elif activity.type == 'pattern_analyzed' %}
+                                    📊 Pattern Analyzed
+                                {% elif activity.type == 'risk_analyzed' %}
+                                    ⚠️ Risk Analyzed
+                                {% elif activity.type == 'link_checked' %}
+                                    🔗 Link Checked
+                                {% else %}
+                                    ℹ️ {{ activity.type|replace('_', ' ')|title }}
+                                {% endif %}
+                            </div>
+                            <div class="activity-time">
+                                {% set dt = activity.timestamp|strptime('%Y-%m-%dT%H:%M:%S.%f') %}
+                                {{ dt.strftime('%b %d, %H:%M') }}
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="activity-footer">
+                            <a href="{{ url_for('history') }}" class="btn btn-outline btn-small">View All</a>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No activities yet. Start by using one of the security tools!</p>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- QUICK ACTIONS -->
+    <section class="quick-actions-section">
+        <h2 class="section-title">⚡ Quick Actions</h2>
+        <div class="quick-actions-grid">
+            <a href="{{ url_for('password_generator') }}" class="quick-action-btn btn btn-primary">
+                <span class="action-icon">🔐</span>
+                <span class="action-text">Generate Password</span>
+            </a>
+            <a href="{{ url_for('password_checker') }}" class="quick-action-btn btn btn-primary">
+                <span class="action-icon">✓</span>
+                <span class="action-text">Check Password</span>
+            </a>
+            <a href="{{ url_for('link_checker') }}" class="quick-action-btn btn btn-primary">
+                <span class="action-icon">🔗</span>
+                <span class="action-text">Check Link</span>
+            </a>
+            <a href="{{ url_for('cyberguard') }}" class="quick-action-btn btn btn-primary">
+                <span class="action-icon">🛡️</span>
+                <span class="action-text">CyberGuard</span>
+            </a>
+            <a href="{{ url_for('history') }}" class="quick-action-btn btn btn-primary">
+                <span class="action-icon">📋</span>
+                <span class="action-text">View History</span>
+            </a>
+            <a href="{{ url_for('education') }}" class="quick-action-btn btn btn-primary">
+                <span class="action-icon">📚</span>
+                <span class="action-text">Guide</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- BOTTOM CARDS GRID -->
+    <div class="dashboard-grid">
+        <!-- CYBERGUARD CARD -->
+        <section class="dashboard-card card">
+            <div class="card-header">
+                <h2 class="card-title">🛡️ CyberGuard</h2>
+                <p class="card-subtitle">Local intelligent cybersecurity analysis</p>
+            </div>
+            <div class="card-content">
+                <p>Analyze security risks, understand suspicious activity, and receive practical protection guidance using local analysis.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('cyberguard') }}" class="btn btn-secondary">Open CyberGuard</a>
+            </div>
+        </section>
+
+        <!-- GUIDE CARD -->
+        <section class="dashboard-card card">
+            <div class="card-header">
+                <h2 class="card-title">📚 Cybersecurity Guide</h2>
+                <p class="card-subtitle">Learn how to stay safe online</p>
+            </div>
+            <div class="card-content">
+                <p>Learn how common cyber threats work and how to protect yourself with practical, actionable security guidance.</p>
+            </div>
+            <div class="card-footer">
+                <a href="{{ url_for('education') }}" class="btn btn-secondary">Explore Guide</a>
+            </div>
+        </section>
+
+        <!-- SECURITY TIP CARD -->
+        <section class="dashboard-card card security-tip">
+            <div class="card-header">
+                <h2 class="card-title">💡 Security Tip</h2>
+            </div>
+            <div class="card-content">
+                <div class="tip-content">
+                    <p>Use unique passwords for each important account. If one service is breached, your other accounts remain secure.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

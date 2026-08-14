@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Cybersecurity Guide - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/education.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper education-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">📚 {{ content.title }}</h1>
+        <p class="page-subtitle">Learn how to protect yourself from cyber threats.</p>
+        
+        <div class="language-selector">
+            <a href="{{ url_for('education', lang='en') }}" class="lang-btn {% if language == 'en' %}active{% endif %}">🇬🇧 English</a>
+            <a href="{{ url_for('education', lang='bn') }}" class="lang-btn {% if language == 'bn' %}active{% endif %}">🇧🇩 বাংলা</a>
+        </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="categories-section">
+        <h2 class="section-title">Categories</h2>
+        <div class="categories-grid">
+            {% for category in content.categories %}
+            <div class="category-card">
+                <h3 class="category-title">{{ category.name }}</h3>
+                <ul class="topics-list">
+                    {% for topic in category.topics %}
+                    <li><a href="#{{ topic.title|replace(' ', '-')|lower }}">{{ topic.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- CONTENT SECTIONS -->
+    <div class="content-sections">
+        {% for category in content.categories %}
+        <section class="category-section">
+            <h2 class="category-heading">{{ category.name }}</h2>
+
+            {% for topic in category.topics %}
+            <div class="topic-card card" id="{{ topic.title|replace(' ', '-')|lower }}">
+                <div class="card-header">
+                    <h3 class="topic-title">{{ topic.title }}</h3>
+                </div>
+                <div class="card-content">
+                    <div class="topic-section">
+                        <h4 class="section-heading">What is it?</h4>
+                        <p>{{ topic.what }}</p>
+                    </div>
+
+                    <div class="topic-section">
+                        <h4 class="section-heading">Example</h4>
+                        <div class="example-box">
+                            <p>{{ topic.example }}</p>
+                        </div>
+                    </div>
+
+                    <div class="topic-section">
+                        <h4 class="section-heading">Why is it risky?</h4>
+                        <p>{{ topic.why_risky }}</p>
+                    </div>
+
+                    <div class="topic-section">
+                        <h4 class="section-heading">How to stay safe</h4>
+                        <ul class="safety-tips">
+                            {% for tip in topic.how_safe %}
+                            <li>{{ tip }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+
+                    <div class="topic-section remember-box">
+                        <h4 class="section-heading">Remember</h4>
+                        <p>{{ topic.remember }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </section>
+        {% endfor %}
+    </div>
+
+    <!-- BACK TO TOP & NAVIGATION -->
+    <div class="navigation-footer">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">← Back to Dashboard</a>
+        <a href="{{ url_for('cyberguard') }}" class="btn btn-primary">Open CyberGuard →</a>
+    </div>
+</div>
+{% endblock %}

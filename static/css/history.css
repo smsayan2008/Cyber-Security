@@ -1,0 +1,217 @@
+/* ========================================================================
+   HISTORY STYLES
+   ======================================================================== */
+
+.history-wrapper {
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, #1a1f3a 100%);
+}
+
+/* FILTER SECTION */
+.filter-section {
+    margin-bottom: var(--spacing-xl);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+}
+
+.filter-form {
+    padding: 0;
+    margin: 0;
+}
+
+.filter-group {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.filter-group select {
+    flex: 1;
+    min-width: 200px;
+}
+
+/* HISTORY TABLE */
+.history-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.history-table-wrapper {
+    overflow-x: auto;
+    margin-bottom: var(--spacing-xl);
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: var(--color-bg-tertiary);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.history-table thead {
+    background-color: rgba(0, 217, 255, 0.1);
+    border-bottom: 2px solid var(--color-primary);
+}
+
+.history-table th {
+    padding: var(--spacing-lg) var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.history-table td {
+    padding: var(--spacing-lg) var(--spacing-md);
+    border-top: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.history-table tbody tr:hover {
+    background-color: rgba(0, 217, 255, 0.05);
+}
+
+.activity-badge {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    background-color: rgba(0, 217, 255, 0.2);
+    color: var(--color-primary);
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: var(--font-size-xs);
+    white-space: nowrap;
+}
+
+.details-cell {
+    color: var(--color-text-secondary);
+    max-width: 250px;
+    word-break: break-word;
+}
+
+.details-cell strong {
+    color: var(--color-primary);
+}
+
+.time-cell {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-xs);
+}
+
+.time-detail {
+    display: block;
+    color: var(--color-text-muted);
+    font-size: 0.7rem;
+    margin-top: 0.25rem;
+}
+
+.action-cell {
+    text-align: center;
+}
+
+/* HISTORY ACTIONS */
+.history-actions {
+    text-align: center;
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-top: 1px solid var(--color-border);
+    border-radius: 0 0 8px 8px;
+}
+
+/* EMPTY STATE */
+.no-activities {
+    text-align: center;
+    padding: var(--spacing-2xl);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 8px;
+    border: 1px dashed var(--color-border-light);
+}
+
+.empty-message {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-md) 0;
+    font-weight: 500;
+}
+
+.empty-hint {
+    color: var(--color-text-secondary);
+    margin: 0 0 var(--spacing-xl) 0;
+    font-size: var(--font-size-sm);
+}
+
+.empty-actions {
+    display: flex;
+    gap: var(--spacing-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.empty-actions .btn {
+    min-width: 150px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .history-table {
+        font-size: var(--font-size-xs);
+    }
+
+    .history-table th {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+
+    .history-table td {
+        padding: var(--spacing-md) var(--spacing-sm);
+    }
+}
+
+@media (max-width: 768px) {
+    .filter-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-group select {
+        min-width: 100%;
+    }
+
+    .history-table-wrapper {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .history-table {
+        min-width: 600px;
+    }
+
+    .empty-actions {
+        flex-direction: column;
+    }
+
+    .empty-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .no-activities {
+        padding: var(--spacing-lg);
+    }
+
+    .empty-message {
+        font-size: var(--font-size-base);
+    }
+
+    .details-cell {
+        max-width: 150px;
+    }
+}

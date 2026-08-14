@@ -1,0 +1,93 @@
+{
+  "activities": [
+    {
+      "type": "link_checked",
+      "details": {
+        "url": "https://suspicious-bank-login.tk/verify",
+        "risk_level": "🟡 SUSPICIOUS",
+        "indicators": [
+          "Path contains suspicious patterns"
+        ]
+      },
+      "timestamp": "2026-08-14T12:17:41.506516"
+    },
+    {
+      "type": "pattern_analyzed",
+      "details": {
+        "patterns": [
+          "Common keywords detected",
+          "Sequential characters found"
+        ],
+        "risks": [
+          "HIGH RISK",
+          "MEDIUM RISK"
+        ]
+      },
+      "timestamp": "2026-08-14T12:16:34.626466"
+    },
+    {
+      "type": "password_checked",
+      "details": {
+        "strength": "Very Strong",
+        "length": 12
+      },
+      "timestamp": "2026-08-14T12:16:16.626629"
+    },
+    {
+      "type": "password_generated",
+      "details": {
+        "count": 10,
+        "length": 12,
+        "options": {
+          "lowercase": true,
+          "uppercase": true,
+          "numbers": true,
+          "special": true
+        }
+      },
+      "timestamp": "2026-08-14T12:16:00.224190"
+    },
+    {
+      "type": "password_generated",
+      "details": {
+        "count": 10,
+        "length": 12,
+        "options": {
+          "lowercase": true,
+          "uppercase": true,
+          "numbers": true,
+          "special": true
+        }
+      },
+      "timestamp": "2026-08-14T12:15:36.270350"
+    },
+    {
+      "type": "password_generated",
+      "details": {
+        "count": 10,
+        "length": 10,
+        "options": {
+          "lowercase": true,
+          "uppercase": true,
+          "numbers": true,
+          "special": true
+        }
+      },
+      "timestamp": "2026-08-13T18:00:15.865747"
+    },
+    {
+      "type": "password_generated",
+      "details": {
+        "count": 10,
+        "length": 10,
+        "options": {
+          "lowercase": true,
+          "uppercase": true,
+          "numbers": true,
+          "special": false
+        }
+      },
+      "timestamp": "2026-08-13T18:00:07.778892"
+    }
+  ]
+}

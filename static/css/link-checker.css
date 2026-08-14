@@ -1,0 +1,188 @@
+/* ========================================================================
+   LINK CHECKER STYLES
+   ======================================================================== */
+
+.link-checker-wrapper {
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, #1a1f3a 100%);
+}
+
+.checker-container {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: var(--spacing-xl);
+    max-width: 1400px;
+}
+
+.checker-input-section {
+    grid-column: 1;
+    height: fit-content;
+}
+
+.checker-results-section {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+/* FORM */
+.checker-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* RISK CARD */
+.risk-card {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.risk-result {
+    display: flex;
+    gap: var(--spacing-xl);
+    align-items: center;
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 8px;
+}
+
+.risk-emoji {
+    font-size: 3rem;
+    flex-shrink: 0;
+}
+
+.risk-text {
+    flex: 1;
+}
+
+.risk-title {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.risk-url {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+    margin: 0;
+}
+
+/* INDICATORS CARD */
+.indicators-card {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.indicators-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.indicator-item {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    padding: var(--spacing-md);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 6px;
+    border-left: 3px solid var(--color-warning);
+    transition: all 0.3s ease;
+}
+
+.indicator-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.indicator-icon {
+    font-size: var(--font-size-lg);
+    flex-shrink: 0;
+    line-height: 1.5;
+}
+
+.indicator-text {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    line-height: 1.5;
+}
+
+.no-indicators {
+    padding: var(--spacing-lg);
+    background-color: rgba(16, 185, 129, 0.1);
+    border-left: 3px solid var(--color-success);
+    border-radius: 4px;
+    color: var(--color-success);
+    text-align: center;
+    margin: 0;
+}
+
+/* RECOMMENDATION CARD */
+.recommendation-card {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.recommendation-text {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-lg);
+}
+
+.disclaimer-box {
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-left: 3px solid var(--color-text-muted);
+    border-radius: 4px;
+}
+
+.disclaimer {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.disclaimer strong {
+    color: var(--color-text-primary);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .checker-container {
+        grid-template-columns: 1fr;
+    }
+
+    .checker-input-section {
+        grid-column: 1;
+    }
+
+    .checker-results-section {
+        grid-column: 1;
+    }
+
+    .risk-result {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--spacing-lg);
+    }
+
+    .risk-emoji {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .indicator-item {
+        padding: var(--spacing-md);
+    }
+
+    .disclaimer-box {
+        padding: var(--spacing-lg);
+    }
+}

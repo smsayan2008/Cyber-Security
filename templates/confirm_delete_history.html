@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Confirm Deletion - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/confirmation.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper confirmation-wrapper">
+    <div class="confirmation-container">
+        <div class="confirmation-card card">
+            <div class="card-header">
+                <h1 class="confirmation-title">⚠️ Delete History Entry?</h1>
+            </div>
+            <div class="card-content">
+                <p class="confirmation-message">Are you sure you want to delete this history entry?</p>
+                
+                <div class="activity-preview card">
+                    <div class="preview-item">
+                        <span class="preview-label">Activity Type:</span>
+                        <span class="preview-value">
+                            {% if activity.type == 'password_generated' %}
+                                🔑 Password Generated
+                            {% elif activity.type == 'password_regenerated' %}
+                                🔄 Password Regenerated
+                            {% elif activity.type == 'password_checked' %}
+                                ✓ Password Checked
+                            {% elif activity.type == 'pattern_analyzed' %}
+                                📊 Pattern Analyzed
+                            {% elif activity.type == 'risk_analyzed' %}
+                                ⚠️ Risk Analyzed
+                            {% elif activity.type == 'link_checked' %}
+                                🔗 Link Checked
+                            {% else %}
+                                ℹ️ Other
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% if activity.details %}
+                    <div class="preview-item">
+                        <span class="preview-label">Details:</span>
+                        <span class="preview-value">
+                            {% if activity.details.strength %}
+                                Strength: {{ activity.details.strength }}
+                            {% elif activity.details.count %}
+                                {{ activity.details.count }} passwords generated
+                            {% elif activity.details.risk_level %}
+                                {{ activity.details.risk_level }}
+                            {% else %}
+                                Security check completed
+                            {% endif %}
+                        </span>
+                    </div>
+                    {% endif %}
+                    <div class="preview-item">
+                        <span class="preview-label">Date & Time:</span>
+                        <span class="preview-value">
+                            {% set dt = activity.timestamp|strptime('%Y-%m-%dT%H:%M:%S.%f') %}
+                            {{ dt.strftime('%B %d, %Y at %H:%M:%S') }}
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="confirmation-actions">
+                    <form method="POST" action="{{ url_for('delete_history', index=index) }}" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Yes, Delete Entry</button>
+                    </form>
+                    <a href="{{ url_for('history') }}" class="btn btn-outline">Cancel</a>
+                </div>
+                
+                <p class="confirmation-note">This action cannot be undone. The entry will be permanently removed from your history.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

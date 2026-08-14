@@ -1,0 +1,164 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper settings-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">⚙️ Settings</h1>
+        <p class="page-subtitle">Configure CyberShield to your preferences.</p>
+    </div>
+
+    <div class="settings-container">
+        <form method="POST" class="settings-form">
+            <!-- APPEARANCE -->
+            <section class="settings-section card">
+                <div class="card-header">
+                    <h2 class="card-title">🎨 Appearance</h2>
+                    <p class="card-subtitle">Customize your visual experience</p>
+                </div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label for="theme">Theme</label>
+                        <select id="theme" name="theme">
+                            <option value="dark" {% if settings.theme == 'dark' %}selected{% endif %}>Dark (Default)</option>
+                            <option value="light" disabled>Light (Coming Soon)</option>
+                        </select>
+                        <p class="setting-hint">CyberShield currently uses the Dark cybersecurity theme.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PASSWORD GENERATION -->
+            <section class="settings-section card">
+                <div class="card-header">
+                    <h2 class="card-title">🔐 Password Generation</h2>
+                    <p class="card-subtitle">Default options for generating new passwords</p>
+                </div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label for="password_length">Default Password Length</label>
+                        <input type="number" id="password_length" name="password_length" value="{{ settings.password_length|default(14) }}" min="8" max="32" disabled>
+                        <p class="setting-hint">Set when generating passwords (current: {{ settings.password_length|default(14) }} characters)</p>
+                    </div>
+
+                    <div class="checkbox-list">
+                        <p class="checkbox-label">Character Options (remember at startup):</p>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="gen_lower" name="gen_lower" disabled {% if settings.use_lowercase|default(True) %}checked{% endif %}>
+                            <label for="gen_lower">Lowercase letters (a-z)</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="gen_upper" name="gen_upper" disabled {% if settings.use_uppercase|default(True) %}checked{% endif %}>
+                            <label for="gen_upper">Uppercase letters (A-Z)</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="gen_numbers" name="gen_numbers" disabled {% if settings.use_numbers|default(True) %}checked{% endif %}>
+                            <label for="gen_numbers">Numbers (0-9)</label>
+                        </div>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="gen_special" name="gen_special" disabled {% if settings.use_special|default(False) %}checked{% endif %}>
+                            <label for="gen_special">Special characters (!@#)</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRIVACY -->
+            <section class="settings-section card">
+                <div class="card-header">
+                    <h2 class="card-title">🔒 Privacy</h2>
+                    <p class="card-subtitle">Control how sensitive data is displayed</p>
+                </div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label for="password_visibility">Password Visibility</label>
+                        <select id="password_visibility" name="password_visibility">
+                            <option value="masked" {% if settings.password_visibility == 'masked' %}selected{% endif %}>Masked by Default (Hidden)</option>
+                            <option value="visible" {% if settings.password_visibility == 'visible' %}selected{% endif %}>Visible (Show Passwords)</option>
+                        </select>
+                        <p class="setting-hint">Control whether stored passwords are shown by default in lists and history.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LANGUAGE -->
+            <section class="settings-section card">
+                <div class="card-header">
+                    <h2 class="card-title">🌐 Language</h2>
+                    <p class="card-subtitle">Select your preferred language</p>
+                </div>
+                <div class="card-content">
+                    <div class="form-group">
+                        <label for="language">Language</label>
+                        <select id="language" name="language">
+                            <option value="en" {% if settings.language == 'en' %}selected{% endif %}>🇬🇧 English</option>
+                            <option value="bn" {% if settings.language == 'bn' %}selected{% endif %}>🇧🇩 বাংলা (Bengali)</option>
+                        </select>
+                        <p class="setting-hint">Changes the language for the Cybersecurity Guide and education content.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOCAL DATA -->
+            <section class="settings-section card">
+                <div class="card-header">
+                    <h2 class="card-title">💾 Local Data</h2>
+                    <p class="card-subtitle">Manage your locally stored data</p>
+                </div>
+                <div class="card-content">
+                    <p class="data-info">All your data is stored locally on your device:</p>
+                    <ul class="data-list">
+                        <li>🔐 Passwords from Local Password List</li>
+                        <li>📋 Activity History</li>
+                        <li>⚙️ Application Settings</li>
+                        <li>📊 Security Analysis Results</li>
+                    </ul>
+                    <p class="data-note"><strong>Note:</strong> Data is NOT synchronized to any online service. You can access your full data files in the <code>data/</code> folder.</p>
+                </div>
+            </section>
+
+            <!-- ABOUT -->
+            <section class="settings-section card">
+                <div class="card-header">
+                    <h2 class="card-title">ℹ️ About</h2>
+                    <p class="card-subtitle">Application information</p>
+                </div>
+                <div class="card-content">
+                    <div class="about-info">
+                        <div class="info-item">
+                            <span class="info-label">Application:</span>
+                            <span class="info-value">CyberShield Offline Toolkit v1.0</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Architecture:</span>
+                            <span class="info-value">Python Flask + HTML5 + CSS3</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Storage:</span>
+                            <span class="info-value">Local JSON Files (No Database)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">External Services:</span>
+                            <span class="info-value">None (Completely Offline)</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Purpose:</span>
+                            <span class="info-value">Educational Security Toolkit</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SAVE BUTTON -->
+            <div class="settings-actions">
+                <button type="submit" class="btn btn-primary">Save Settings</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

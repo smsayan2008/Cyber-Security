@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+
+{% block title %}Activity History - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper history-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">📋 Activity History</h1>
+        <p class="page-subtitle">View and manage your security analysis activities.</p>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="filter-section card">
+        <form method="GET" class="filter-form">
+            <div class="filter-group">
+                <label for="type">Filter by Type:</label>
+                <select id="type" name="type">
+                    <option value="all" {% if activity_type == 'all' %}selected{% endif %}>All Activities</option>
+                    <option value="password_generated" {% if activity_type == 'password_generated' %}selected{% endif %}>Password Generated</option>
+                    <option value="password_regenerated" {% if activity_type == 'password_regenerated' %}selected{% endif %}>Password Regenerated</option>
+                    <option value="password_checked" {% if activity_type == 'password_checked' %}selected{% endif %}>Password Checked</option>
+                    <option value="pattern_analyzed" {% if activity_type == 'pattern_analyzed' %}selected{% endif %}>Pattern Analyzed</option>
+                    <option value="risk_analyzed" {% if activity_type == 'risk_analyzed' %}selected{% endif %}>Risk Analyzed</option>
+                    <option value="link_checked" {% if activity_type == 'link_checked' %}selected{% endif %}>Link Checked</option>
+                </select>
+                <button type="submit" class="btn btn-outline btn-small">Filter</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- HISTORY TABLE -->
+    <div class="history-section card">
+        <div class="card-header">
+            <h2 class="card-title">{{ activities|length }} Activities</h2>
+            <p class="card-subtitle">Newest first</p>
+        </div>
+        <div class="card-content">
+            {% if activities %}
+                <div class="history-table-wrapper">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>Activity</th>
+                                <th>Details</th>
+                                <th>Date & Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for activity in activities %}
+                            <tr>
+                                <td>
+                                    <span class="activity-badge">
+                                        {% if activity.type == 'password_generated' %}
+                                            🔑 Generated
+                                        {% elif activity.type == 'password_regenerated' %}
+                                            🔄 Regenerated
+                                        {% elif activity.type == 'password_checked' %}
+                                            ✓ Checked
+                                        {% elif activity.type == 'pattern_analyzed' %}
+                                            📊 Pattern
+                                        {% elif activity.type == 'risk_analyzed' %}
+                                            ⚠️ Risk
+                                        {% elif activity.type == 'link_checked' %}
+                                            🔗 Link
+                                        {% else %}
+                                            ℹ️ Other
+                                        {% endif %}
+                                    </span>
+                                </td>
+                                <td class="details-cell">
+                                    {% if activity.details.strength %}
+                                        Strength: <strong>{{ activity.details.strength }}</strong>
+                                    {% elif activity.details.count %}
+                                        Generated <strong>{{ activity.details.count }}</strong> passwords
+                                    {% elif activity.details.url %}
+                                        {{ activity.details.url[:50] }}...
+                                    {% elif activity.details.risk_level %}
+                                        {{ activity.details.risk_level }}
+                                    {% else %}
+                                        Security check completed
+                                    {% endif %}
+                                </td>
+                                <td class="time-cell">
+                                    {% set dt = activity.timestamp|strptime('%Y-%m-%dT%H:%M:%S.%f') %}
+                                    {{ dt.strftime('%b %d') }}<br><span class="time-detail">{{ dt.strftime('%H:%M:%S') }}</span>
+                                </td>
+                                <td class="action-cell">
+                                    <a href="{{ url_for('confirm_delete_history', index=loop.index0) }}" class="btn btn-danger btn-small">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="history-actions">
+                    <a href="{{ url_for('confirm_clear_history') }}" class="btn btn-danger">Clear All History</a>
+                </div>
+            {% else %}
+                <div class="no-activities">
+                    <p class="empty-message">No activities found in your history.</p>
+                    <p class="empty-hint">Start using the security tools to build your activity log.</p>
+                    <div class="empty-actions">
+                        <a href="{{ url_for('password_generator') }}" class="btn btn-primary">Generate Password</a>
+                        <a href="{{ url_for('link_checker') }}" class="btn btn-primary">Check Link</a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

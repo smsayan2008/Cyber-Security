@@ -1,0 +1,270 @@
+/* ========================================================================
+   SETTINGS STYLES
+   ======================================================================== */
+
+.settings-wrapper {
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, #1a1f3a 100%);
+}
+
+.settings-container {
+    max-width: 800px;
+}
+
+.settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+/* SETTINGS SECTION */
+.settings-section {
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    transition: all 0.3s ease;
+}
+
+.settings-section:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 217, 255, 0.1);
+}
+
+.card-header {
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.card-title {
+    margin-bottom: var(--spacing-sm);
+}
+
+.card-subtitle {
+    margin: 0;
+    font-size: var(--font-size-sm);
+}
+
+/* FORM ELEMENTS */
+.form-group {
+    margin-bottom: var(--spacing-lg);
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+}
+
+.form-group select,
+.form-group input[type="number"] {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border-light);
+    background-color: var(--color-bg-tertiary);
+    color: var(--color-text-primary);
+    border-radius: 6px;
+    font-size: var(--font-size-sm);
+    transition: all 0.3s ease;
+}
+
+.form-group select:focus,
+.form-group input[type="number"]:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+}
+
+.form-group select:disabled,
+.form-group input[type="number"]:disabled {
+    background-color: var(--color-bg-secondary);
+    color: var(--color-text-secondary);
+    cursor: not-allowed;
+}
+
+.setting-hint {
+    margin-top: var(--spacing-sm);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* CHECKBOX LIST */
+.checkbox-list {
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 6px;
+    border-left: 3px solid var(--color-primary);
+}
+
+.checkbox-label {
+    font-weight: 500;
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-md);
+    display: block;
+    font-size: var(--font-size-sm);
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.checkbox-group:last-child {
+    margin-bottom: 0;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--color-primary);
+    flex-shrink: 0;
+}
+
+.checkbox-group input[type="checkbox"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.checkbox-group label {
+    cursor: pointer;
+    user-select: none;
+    margin: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    font-weight: 400;
+}
+
+/* DATA INFO */
+.data-info {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.data-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--spacing-lg) 0;
+    background-color: var(--color-bg-tertiary);
+    border-radius: 6px;
+    overflow: hidden;
+    border-left: 3px solid var(--color-primary);
+}
+
+.data-list li {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+}
+
+.data-list li:last-child {
+    border-bottom: none;
+}
+
+.data-note {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 6px;
+    border-left: 3px solid var(--color-warning);
+    margin: 0;
+}
+
+.data-note code {
+    background-color: var(--color-bg-primary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    color: var(--color-primary);
+    font-family: 'Courier New', monospace;
+}
+
+/* ABOUT INFO */
+.about-info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.info-item {
+    display: flex;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 6px;
+    border-left: 3px solid var(--color-primary);
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--color-primary);
+    min-width: 150px;
+    font-size: var(--font-size-sm);
+}
+
+.info-value {
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    flex: 1;
+}
+
+/* ACTIONS */
+.settings-actions {
+    padding-top: var(--spacing-xl);
+    border-top: 1px solid var(--color-border);
+    display: flex;
+    justify-content: flex-start;
+    gap: var(--spacing-lg);
+}
+
+.settings-actions .btn {
+    min-width: 200px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .settings-container {
+        max-width: 100%;
+    }
+
+    .checkbox-list {
+        padding: var(--spacing-lg);
+    }
+
+    .info-item {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .info-label {
+        min-width: auto;
+    }
+
+    .settings-actions {
+        flex-direction: column;
+    }
+
+    .settings-actions .btn {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-group label {
+        font-size: var(--font-size-sm);
+    }
+
+    .card-header {
+        margin-bottom: var(--spacing-md);
+        padding-bottom: var(--spacing-md);
+    }
+
+    .settings-section {
+        padding: var(--spacing-lg);
+    }
+}

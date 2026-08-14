@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Risk Analyzer - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/risk-analyzer.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper risk-analyzer-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">⚠️ Password Risk Analyzer</h1>
+        <p class="page-subtitle">Assess the security risks and vulnerabilities in your passwords.</p>
+    </div>
+
+    <div class="analyzer-container">
+        <!-- INPUT SECTION -->
+        <div class="analyzer-input-section card">
+            <div class="card-header">
+                <h2 class="card-title">Analyze Risk</h2>
+            </div>
+            <div class="card-content">
+                <form method="POST" class="analyzer-form">
+                    <div class="form-group">
+                        <label for="password">Password to Analyze</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Analyze Risk</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- RESULTS -->
+        {% if form_submitted %}
+        <div class="risk-results-section">
+            {% if error %}
+                <div class="alert alert-error">{{ error }}</div>
+            {% else %}
+                <!-- RISK CLASSIFICATION -->
+                <div class="card risk-classification-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Risk Classification</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="risk-badge-container">
+                            {% if analysis.risk_level == 'LOW RISK' %}
+                                <div class="risk-badge risk-low">{{ analysis.risk_level }}</div>
+                            {% elif analysis.risk_level == 'MEDIUM RISK' %}
+                                <div class="risk-badge risk-medium">{{ analysis.risk_level }}</div>
+                            {% elif analysis.risk_level == 'HIGH RISK' %}
+                                <div class="risk-badge risk-high">{{ analysis.risk_level }}</div>
+                            {% else %}
+                                <div class="risk-badge risk-critical">{{ analysis.risk_level }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STRENGTH ANALYSIS -->
+                <div class="card strength-analysis-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Strength Breakdown</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="strength-breakdown">
+                            <div class="breakdown-item">
+                                <span class="item-label">Assessed Strength</span>
+                                <span class="item-value strength-{{ analysis.strength_analysis.strength|lower|replace(' ', '-') }}">
+                                    {{ analysis.strength_analysis.strength }}
+                                </span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="item-label">Length</span>
+                                <span class="item-value">{{ analysis.strength_analysis.length }} characters</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="item-label">Character Types</span>
+                                <span class="item-value">
+                                    {% set types_count = (analysis.strength_analysis.has_lower|int + analysis.strength_analysis.has_upper|int + analysis.strength_analysis.has_number|int + analysis.strength_analysis.has_special|int) %}
+                                    {{ types_count }}/4
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RISK FACTORS -->
+                <div class="card risk-factors-card">
+                    <div class="card-header">
+                        <h2 class="card-title">⚡ Risk Factors</h2>
+                    </div>
+                    <div class="card-content">
+                        {% if analysis.risk_factors %}
+                            <div class="factors-list">
+                                {% for factor in analysis.risk_factors %}
+                                <div class="factor-item">
+                                    <span class="factor-icon">⚠️</span>
+                                    <span class="factor-text">{{ factor }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="no-factors">✓ No major risk factors detected. This password demonstrates good security practices.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- RECOMMENDATIONS -->
+                <div class="card recommendations-card">
+                    <div class="card-header">
+                        <h2 class="card-title">💡 What You Should Do</h2>
+                    </div>
+                    <div class="card-content">
+                        {% if analysis.risk_level == 'CRITICAL RISK' %}
+                            <p>This password has critical vulnerabilities. <strong>Do not use it for important accounts.</strong> Regenerate immediately using the Password Generator.</p>
+                        {% elif analysis.risk_level == 'HIGH RISK' %}
+                            <p>This password has significant security issues. Consider replacing it with a stronger password using the Password Generator.</p>
+                        {% elif analysis.risk_level == 'MEDIUM RISK' %}
+                            <p>This password is adequate but could be improved. Use the Password Generator to create stronger alternatives if needed.</p>
+                        {% else %}
+                            <p>This password demonstrates good security. Continue maintaining strong password practices and update regularly.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

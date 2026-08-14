@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block title %}ProtectAI - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/protectai.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper protectai-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">🤖 ProtectAI</h1>
+        <p class="page-subtitle">Local Intelligent Cybersecurity Analysis</p>
+        <div class="status-indicator">
+            <span class="status-dot">●</span> LOCAL ANALYSIS ACTIVE
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section card">
+        <div class="hero-content">
+            <h2>Intelligent Security Analysis</h2>
+            <p>Analyze security risks, understand suspicious activity, and receive practical protection guidance using local cybersecurity analysis.</p>
+        </div>
+    </section>
+
+    <!-- FEATURE GRID -->
+    <section class="features-section">
+        <h2 class="section-title">Features</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🔐</div>
+                <div class="feature-title">Password Protection</div>
+                <div class="feature-description">Analyze password risks and receive strengthening recommendations.</div>
+                <a href="{{ url_for('password_checker') }}" class="btn btn-outline btn-small">Analyze</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <div class="feature-title">Link Threat Analysis</div>
+                <div class="feature-description">Analyze suspicious URL structures and security patterns.</div>
+                <a href="{{ url_for('link_checker') }}" class="btn btn-outline btn-small">Check</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚠️</div>
+                <div class="feature-title">Security Risk Analysis</div>
+                <div class="feature-description">Summarize local security findings and threat indicators.</div>
+                <a href="{{ url_for('risk_analyzer') }}" class="btn btn-outline btn-small">Analyze</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎣</div>
+                <div class="feature-title">Phishing Awareness</div>
+                <div class="feature-description">Learn to identify phishing indicators and fraud patterns.</div>
+                <a href="{{ url_for('education') }}" class="btn btn-outline btn-small">Learn</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <div class="feature-title">Privacy Protection</div>
+                <div class="feature-description">Practical privacy recommendations for online safety.</div>
+                <a href="{{ url_for('education', lang='en') }}" class="btn btn-outline btn-small">Guide</a>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <div class="feature-title">Device Security</div>
+                <div class="feature-description">Practical guidance for protecting your devices.</div>
+                <a href="{{ url_for('education') }}" class="btn btn-outline btn-small">Tips</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- OVERVIEW SECTION -->
+    <section class="overview-section">
+        <div class="overview-grid">
+            <div class="overview-card card">
+                <div class="overview-value">{{ stats.passwords_analyzed|default(0) }}</div>
+                <div class="overview-label">Passwords Analyzed</div>
+            </div>
+            <div class="overview-card card">
+                <div class="overview-value">{{ stats.links_checked|default(0) }}</div>
+                <div class="overview-label">Links Checked</div>
+            </div>
+            <div class="overview-card card">
+                <div class="overview-value">{{ stats.warnings_found|default(0) }}</div>
+                <div class="overview-label">Warnings Found</div>
+            </div>
+            <div class="overview-card card">
+                <div class="overview-value">{{ stats.total_activities|default(0) }}</div>
+                <div class="overview-label">Security Events</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECURITY ADVISOR -->
+    <section class="advisor-section card">
+        <div class="card-header">
+            <h2 class="card-title">💡 Security Advisor</h2>
+            <p class="card-subtitle">Personalized recommendations based on local activity</p>
+        </div>
+        <div class="card-content">
+            <div class="advisor-message">
+                {% if stats.warnings_found > 0 %}
+                    {% if stats.warnings_found > 3 %}
+                        <p>Multiple security warnings detected in recent checks. Review your History for detailed findings and consider regenerating weak passwords using the Password Generator.</p>
+                    {% else %}
+                        <p>A few security indicators were found in recent checks. Consider strengthening weak passwords and verifying suspicious links.</p>
+                    {% endif %}
+                {% elif stats.passwords_checked > 0 %}
+                    <p>Recent password checks show good security practices. Continue maintaining strong, unique passwords for all important accounts.</p>
+                {% elif stats.links_checked > 0 %}
+                    <p>You've been checking links for security. Remember to verify domains before entering any sensitive information.</p>
+                {% else %}
+                    <p>No major warning indicators were detected in recent local checks. Keep using the security tools to maintain awareness of potential risks.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- RECENT ACTIVITY -->
+    <section class="activity-section card">
+        <div class="card-header">
+            <h2 class="card-title">📋 Recent Security Activity</h2>
+        </div>
+        <div class="card-content">
+            {% if recent_activity %}
+                <div class="activity-timeline">
+                    {% for activity in recent_activity %}
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-title">
+                                {% if activity.type == 'password_checked' %}
+                                    Password Strength Checked
+                                {% elif activity.type == 'risk_analyzed' %}
+                                    Risk Analysis Performed
+                                {% elif activity.type == 'link_checked' %}
+                                    Link Analyzed
+                                {% else %}
+                                    {{ activity.type|replace('_', ' ')|title }}
+                                {% endif %}
+                            </div>
+                            <div class="timeline-time">
+                                {% set dt = activity.timestamp|strptime('%Y-%m-%dT%H:%M:%S.%f') %}
+                                {{ dt.strftime('%b %d, %H:%M') }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="no-activity">No recent security activity. Start by using the security analysis tools.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- QUICK ACTIONS -->
+    <section class="quick-actions-section">
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="actions-grid">
+            <a href="{{ url_for('password_generator') }}" class="action-btn">🔐 Generate Password</a>
+            <a href="{{ url_for('password_checker') }}" class="action-btn">✓ Analyze Password</a>
+            <a href="{{ url_for('link_checker') }}" class="action-btn">🔗 Check Link</a>
+            <a href="{{ url_for('history') }}" class="action-btn">📋 View History</a>
+            <a href="{{ url_for('education') }}" class="action-btn">📚 Cybersecurity Guide</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

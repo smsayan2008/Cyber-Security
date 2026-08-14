@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Link Safety Checker - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/link-checker.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper link-checker-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">🔗 Link Safety Checker</h1>
+        <p class="page-subtitle">Analyze URLs for security risks and suspicious indicators.</p>
+    </div>
+
+    <div class="checker-container">
+        <!-- INPUT SECTION -->
+        <div class="checker-input-section card">
+            <div class="card-header">
+                <h2 class="card-title">Enter URL</h2>
+                <p class="card-subtitle">Local analysis of structural and security patterns</p>
+            </div>
+            <div class="card-content">
+                <form method="POST" class="checker-form">
+                    <div class="form-group">
+                        <label for="url">URL to Check</label>
+                        <input type="url" id="url" name="url" placeholder="https://example.com" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Check Link</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ANALYSIS RESULTS -->
+        {% if form_submitted %}
+        <div class="checker-results-section">
+            {% if error %}
+                <div class="alert alert-error">{{ error }}</div>
+            {% else %}
+                <!-- RISK CLASSIFICATION -->
+                <div class="card risk-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Safety Assessment</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="risk-result">
+                            <div class="risk-emoji">
+                                {% if 'SAFEST' in analysis.risk_level %}🟢{% elif 'SAFE' in analysis.risk_level %}🟢{% elif 'SUSPICIOUS' in analysis.risk_level %}🟡{% elif 'DANGEROUS' in analysis.risk_level %}🟠{% else %}🔴{% endif %}
+                            </div>
+                            <div class="risk-text">
+                                <div class="risk-title">{{ analysis.risk_level }}</div>
+                                <p class="risk-url" title="{{ analysis.url }}">{{ analysis.url[:60] }}{% if analysis.url|length > 60 %}...{% endif %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DETECTED INDICATORS -->
+                <div class="card indicators-card">
+                    <div class="card-header">
+                        <h2 class="card-title">🔍 Detected Indicators</h2>
+                    </div>
+                    <div class="card-content">
+                        {% if analysis.indicators %}
+                            <div class="indicators-list">
+                                {% for indicator in analysis.indicators %}
+                                <div class="indicator-item">
+                                    <span class="indicator-icon">⚠️</span>
+                                    <span class="indicator-text">{{ indicator }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="no-indicators">✓ No suspicious structural patterns detected.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- RECOMMENDATION -->
+                <div class="card recommendation-card">
+                    <div class="card-header">
+                        <h2 class="card-title">💡 Recommendation</h2>
+                    </div>
+                    <div class="card-content">
+                        <p class="recommendation-text">{{ analysis.recommendation }}</p>
+                        <div class="disclaimer-box">
+                            <p class="disclaimer"><strong>Disclaimer:</strong> This is local structural/security-pattern analysis. It cannot guarantee that a website is completely safe or confirm real-world fraud without external reputation intelligence. Always exercise caution online.</p>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

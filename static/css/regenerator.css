@@ -1,0 +1,222 @@
+/* ========================================================================
+   REGENERATOR STYLES
+   ======================================================================== */
+
+.regenerator-wrapper {
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, #1a1f3a 100%);
+}
+
+.regenerator-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-xl);
+    max-width: 1400px;
+}
+
+.regenerator-settings-section {
+    grid-column: 1;
+    height: fit-content;
+}
+
+.regenerator-results-section {
+    grid-column: 2;
+}
+
+/* SETTINGS DISPLAY */
+.regenerator-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+.settings-display {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 6px;
+    border-left: 3px solid var(--color-primary);
+    margin-bottom: var(--spacing-lg);
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.setting-label {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.setting-value {
+    font-size: var(--font-size-base);
+    color: var(--color-text-primary);
+    font-weight: 500;
+}
+
+.option-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    margin-right: var(--spacing-sm);
+    background-color: rgba(0, 217, 255, 0.2);
+    color: var(--color-primary);
+    border-radius: 20px;
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+}
+
+/* PASSWORDS GRID */
+.passwords-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.password-result-card {
+    background-color: var(--color-bg-primary);
+    border: 1px solid var(--color-border-light);
+    border-radius: 6px;
+    padding: var(--spacing-lg);
+    transition: all 0.3s ease;
+}
+
+.password-result-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 217, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.result-password {
+    font-family: 'Courier New', monospace;
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--color-primary);
+    word-break: break-all;
+    padding: var(--spacing-md);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 4px;
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.result-strength {
+    margin-bottom: var(--spacing-md);
+}
+
+.strength-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.strength-weak {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--color-danger);
+}
+
+.strength-medium {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: var(--color-warning);
+}
+
+.strength-strong {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: var(--color-success);
+}
+
+.strength-very-strong {
+    background-color: rgba(0, 217, 255, 0.2);
+    color: var(--color-primary);
+}
+
+.result-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.password-field {
+    padding: var(--spacing-sm);
+    background-color: var(--color-bg-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-xs);
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+}
+
+.copy-hint {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    text-align: center;
+}
+
+.results-info {
+    padding: var(--spacing-lg);
+    background-color: rgba(0, 217, 255, 0.1);
+    border-left: 3px solid var(--color-primary);
+    border-radius: 4px;
+}
+
+.results-info p {
+    margin: 0.5rem 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-primary);
+}
+
+.results-info p:first-child {
+    margin-top: 0;
+}
+
+.results-info p:last-child {
+    margin-bottom: 0;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .regenerator-container {
+        grid-template-columns: 1fr;
+    }
+
+    .regenerator-settings-section {
+        grid-column: 1;
+    }
+
+    .regenerator-results-section {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 768px) {
+    .passwords-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-md);
+    }
+
+    .settings-display {
+        gap: var(--spacing-md);
+    }
+}
+
+@media (max-width: 480px) {
+    .passwords-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .option-badge {
+        display: block;
+        margin-bottom: var(--spacing-sm);
+    }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}CyberShield - Cyber Safety Toolkit{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    🛡️
+                </div>
+                <div class="sidebar-title">
+                    <div class="sidebar-app-name">CyberShield</div>
+                    <div class="sidebar-subtitle">Cyber Safety Toolkit</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <ul class="sidebar-menu">
+                    <li class="menu-item">
+                        <a href="{{ url_for('dashboard') }}" class="menu-link {% if request.endpoint == 'dashboard' %}active{% endif %}">
+                            📊 Dashboard
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="{{ url_for('cyberguard') }}" class="menu-link {% if request.endpoint == 'cyberguard' %}active{% endif %}">
+                            🛡️ CyberGuard
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <details class="menu-group" {% if request.endpoint in ['password_generator', 'password_checker', 'pattern_analyzer', 'risk_analyzer', 'regenerator'] %}open{% endif %}>
+                            <summary class="menu-summary">🔐 Password Security</summary>
+                            <ul class="submenu">
+                                <li><a href="{{ url_for('password_generator') }}" class="menu-link {% if request.endpoint == 'password_generator' %}active{% endif %}">Generator</a></li>
+                                <li><a href="{{ url_for('password_checker') }}" class="menu-link {% if request.endpoint == 'password_checker' %}active{% endif %}">Strength Checker</a></li>
+                                <li><a href="{{ url_for('pattern_analyzer') }}" class="menu-link {% if request.endpoint == 'pattern_analyzer' %}active{% endif %}">Pattern Analyzer</a></li>
+                                <li><a href="{{ url_for('risk_analyzer') }}" class="menu-link {% if request.endpoint == 'risk_analyzer' %}active{% endif %}">Risk Analyzer</a></li>
+                                <li><a href="{{ url_for('regenerator') }}" class="menu-link {% if request.endpoint == 'regenerator' %}active{% endif %}">Regenerator</a></li>
+                            </ul>
+                        </details>
+                    </li>
+
+                    <li class="menu-item">
+                        <details class="menu-group" {% if request.endpoint == 'link_checker' %}open{% endif %}>
+                            <summary class="menu-summary">🔗 Link Security</summary>
+                            <ul class="submenu">
+                                <li><a href="{{ url_for('link_checker') }}" class="menu-link {% if request.endpoint == 'link_checker' %}active{% endif %}">Link Safety Checker</a></li>
+                            </ul>
+                        </details>
+                    </li>
+
+                    <li class="menu-item">
+                        <details class="menu-group" {% if request.endpoint in ['history', 'password_list', 'settings'] %}open{% endif %}>
+                            <summary class="menu-summary">⚙️ Management</summary>
+                            <ul class="submenu">
+                                <li><a href="{{ url_for('history') }}" class="menu-link {% if request.endpoint == 'history' %}active{% endif %}">History</a></li>
+                                <li><a href="{{ url_for('password_list') }}" class="menu-link {% if request.endpoint == 'password_list' %}active{% endif %}">Local Password List</a></li>
+                                <li><a href="{{ url_for('settings') }}" class="menu-link {% if request.endpoint == 'settings' %}active{% endif %}">Settings</a></li>
+                            </ul>
+                        </details>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="{{ url_for('education') }}" class="menu-link {% if request.endpoint == 'education' %}active{% endif %}">
+                            📚 Cybersecurity Guide
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            {% block content %}{% endblock %}
+
+            <!-- FLOATING HELP BUTTON -->
+            <a href="https://indiancybersecuritysolutions.com/" target="_blank" rel="noopener noreferrer" class="help-button">
+                🛡️ Help
+            </a>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Regenerator - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/regenerator.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper regenerator-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">🔄 Password Regenerator</h1>
+        <p class="page-subtitle">Generate new passwords with your previous settings.</p>
+    </div>
+
+    <div class="regenerator-container">
+        <!-- PREVIOUS SETTINGS -->
+        <div class="regenerator-settings-section card">
+            <div class="card-header">
+                <h2 class="card-title">Previous Settings</h2>
+                <p class="card-subtitle">Regenerate with the same configuration</p>
+            </div>
+            <div class="card-content">
+                <form method="POST" class="regenerator-form">
+                    <div class="settings-display">
+                        <div class="setting-item">
+                            <span class="setting-label">Password Length</span>
+                            <span class="setting-value">{{ length|default(settings.password_length|default(14)) }} characters</span>
+                            <input type="hidden" name="length" value="{{ length|default(settings.password_length|default(14)) }}">
+                        </div>
+                        <div class="setting-item">
+                            <span class="setting-label">Character Options</span>
+                            <div class="setting-value">
+                                {% if use_lower|default(settings.use_lowercase|default(True)) %}<span class="option-badge">Lowercase</span>{% endif %}
+                                {% if use_upper|default(settings.use_uppercase|default(True)) %}<span class="option-badge">Uppercase</span>{% endif %}
+                                {% if use_numbers|default(settings.use_numbers|default(True)) %}<span class="option-badge">Numbers</span>{% endif %}
+                                {% if use_special|default(settings.use_special|default(False)) %}<span class="option-badge">Special</span>{% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="use_lower" value="{% if use_lower|default(settings.use_lowercase|default(True)) %}on{% endif %}">
+                    <input type="hidden" name="use_upper" value="{% if use_upper|default(settings.use_uppercase|default(True)) %}on{% endif %}">
+                    <input type="hidden" name="use_numbers" value="{% if use_numbers|default(settings.use_numbers|default(True)) %}on{% endif %}">
+                    <input type="hidden" name="use_special" value="{% if use_special|default(settings.use_special|default(False)) %}on{% endif %}">
+
+                    <button type="submit" class="btn btn-primary btn-block">Generate 10 New Passwords</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- GENERATED RESULTS -->
+        {% if form_submitted %}
+        <div class="regenerator-results-section card">
+            <div class="card-header">
+                <h2 class="card-title">New Passwords</h2>
+                <p class="card-subtitle">Using your previous settings</p>
+            </div>
+            <div class="card-content">
+                <div class="passwords-grid">
+                    {% for pwd_item in passwords %}
+                    <div class="password-result-card">
+                        <div class="result-password">{{ pwd_item.password }}</div>
+                        <div class="result-strength strength-{{ pwd_item.strength|lower|replace(' ', '-') }}">
+                            <span class="strength-badge">{{ pwd_item.strength }}</span>
+                        </div>
+                        <div class="result-actions">
+                            <input type="text" value="{{ pwd_item.password }}" readonly class="password-field">
+                            <span class="copy-hint">Select text to copy</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="results-info">
+                    <p>✓ All passwords have been saved to your activity history.</p>
+                    <p>✓ Generate again anytime with the same settings.</p>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

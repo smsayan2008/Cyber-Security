@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block title %}Pattern Analyzer - CyberShield{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pattern-analyzer.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="page-wrapper pattern-analyzer-wrapper">
+    <div class="page-header">
+        <h1 class="page-title">📊 Password Pattern Analyzer</h1>
+        <p class="page-subtitle">Detect suspicious patterns and predictable structures in your passwords.</p>
+    </div>
+
+    <div class="analyzer-container">
+        <!-- INPUT SECTION -->
+        <div class="analyzer-input-section card">
+            <div class="card-header">
+                <h2 class="card-title">Analyze Password</h2>
+            </div>
+            <div class="card-content">
+                <form method="POST" class="analyzer-form">
+                    <div class="form-group">
+                        <label for="password">Password to Analyze</label>
+                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Analyze Patterns</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ANALYSIS RESULTS -->
+        {% if form_submitted %}
+        <div class="analysis-results-section">
+            {% if error %}
+                <div class="alert alert-error">{{ error }}</div>
+            {% else %}
+                <!-- STRENGTH OVERVIEW CARD -->
+                <div class="card strength-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Strength Analysis</h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="strength-summary">
+                            <div class="strength-indicator strength-{{ strength.strength|lower|replace(' ', '-') }}">
+                                {{ strength.strength }}
+                            </div>
+                            <div class="strength-details">
+                                <div class="detail-item">
+                                    <span class="detail-label">Length:</span>
+                                    <span class="detail-value">{{ strength.length }} characters</span>
+                                </div>
+                                <div class="detail-item">
+                                    <span class="detail-label">Types:</span>
+                                    <span class="detail-value">
+                                        {% if strength.has_lower %}L{% endif %}
+                                        {% if strength.has_upper %}U{% endif %}
+                                        {% if strength.has_number %}#{% endif %}
+                                        {% if strength.has_special %}*{% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DETECTED PATTERNS -->
+                <div class="card patterns-card">
+                    <div class="card-header">
+                        <h2 class="card-title">🔍 Detected Patterns</h2>
+                    </div>
+                    <div class="card-content">
+                        {% if analysis.patterns %}
+                            <div class="patterns-list">
+                                {% for pattern in analysis.patterns %}
+                                <div class="pattern-item">
+                                    <div class="pattern-name">{{ pattern }}</div>
+                                    <div class="pattern-risk">
+                                        {% if analysis.risks[loop.index0] == 'HIGH RISK' %}
+                                            <span class="badge badge-danger">HIGH RISK</span>
+                                        {% elif analysis.risks[loop.index0] == 'MEDIUM RISK' %}
+                                            <span class="badge badge-warning">MEDIUM RISK</span>
+                                        {% else %}
+                                            <span class="badge badge-warning">{{ analysis.risks[loop.index0] }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="no-patterns">No suspicious patterns detected in this password.</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- RECOMMENDATIONS -->
+                <div class="card recommendations-card">
+                    <div class="card-header">
+                        <h2 class="card-title">💡 Recommendations</h2>
+                    </div>
+                    <div class="card-content">
+                        <ul class="recommendations-list">
+                            {% if not analysis.patterns %}
+                                <li>✓ Password shows good variety and randomization</li>
+                                <li>✓ Continue using this password strength level</li>
+                            {% else %}
+                                <li>⚠️ Patterns detected - consider regenerating</li>
+                                <li>✓ Use CyberShield's Password Generator for randomized passwords</li>
+                                <li>✓ Avoid personal information (names, birthdays)</li>
+                                <li>✓ Avoid common sequences and keyboard patterns</li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

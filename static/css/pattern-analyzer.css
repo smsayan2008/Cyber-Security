@@ -1,0 +1,217 @@
+/* ========================================================================
+   PATTERN ANALYZER STYLES
+   ======================================================================== */
+
+.pattern-analyzer-wrapper {
+    background: linear-gradient(135deg, var(--color-bg-primary) 0%, #1a1f3a 100%);
+}
+
+.analyzer-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: var(--spacing-xl);
+    max-width: 1400px;
+}
+
+.analyzer-input-section {
+    grid-column: 1;
+    height: fit-content;
+}
+
+.analysis-results-section {
+    grid-column: 2;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+/* ANALYZER FORM */
+.analyzer-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+}
+
+/* STRENGTH CARD */
+.strength-card {
+    background: linear-gradient(135deg, rgba(0, 217, 255, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
+    border: 1px solid rgba(0, 217, 255, 0.3);
+}
+
+.strength-summary {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+}
+
+.strength-indicator {
+    flex-shrink: 0;
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: var(--font-size-lg);
+    text-align: center;
+    padding: var(--spacing-md);
+}
+
+.strength-indicator.strength-weak {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: var(--color-danger);
+    border: 2px solid var(--color-danger);
+}
+
+.strength-indicator.strength-medium {
+    background-color: rgba(245, 158, 11, 0.2);
+    color: var(--color-warning);
+    border: 2px solid var(--color-warning);
+}
+
+.strength-indicator.strength-strong {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: var(--color-success);
+    border: 2px solid var(--color-success);
+}
+
+.strength-indicator.strength-very-strong {
+    background-color: rgba(0, 217, 255, 0.2);
+    color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+}
+
+.strength-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.detail-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--spacing-md);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 4px;
+    font-size: var(--font-size-sm);
+}
+
+.detail-label {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+}
+
+.detail-value {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+/* PATTERNS CARD */
+.patterns-card {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(239, 68, 68, 0.1) 100%);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.patterns-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.pattern-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 6px;
+    border-left: 3px solid var(--color-warning);
+    transition: all 0.3s ease;
+}
+
+.pattern-item:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.pattern-name {
+    font-weight: 500;
+    color: var(--color-text-primary);
+}
+
+.pattern-risk {
+    flex-shrink: 0;
+}
+
+.no-patterns {
+    padding: var(--spacing-lg);
+    background-color: rgba(16, 185, 129, 0.1);
+    border-left: 3px solid var(--color-success);
+    border-radius: 4px;
+    color: var(--color-success);
+    text-align: center;
+    margin: 0;
+}
+
+/* RECOMMENDATIONS CARD */
+.recommendations-card {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(0, 217, 255, 0.1) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.recommendations-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.recommendations-list li {
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: var(--color-bg-tertiary);
+    border-radius: 4px;
+    color: var(--color-text-primary);
+    font-size: var(--font-size-sm);
+    border-left: 3px solid var(--color-primary);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1200px) {
+    .analyzer-container {
+        grid-template-columns: 1fr;
+    }
+
+    .analyzer-input-section {
+        grid-column: 1;
+    }
+
+    .analysis-results-section {
+        grid-column: 1;
+    }
+
+    .strength-summary {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .strength-indicator {
+        width: 100%;
+        height: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .strength-details {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .detail-item {
+        flex: 1;
+        min-width: calc(50% - 0.5rem);
+    }
+}
